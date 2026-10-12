@@ -39,145 +39,147 @@
 
 ## What This Does
 
-<!-- Your community, and what your classifier sorts posts into. Three or four
-     sentences. -->
+TakeMeter is a discourse-quality classifier built using public comments from r/soccer during the 2026 World Cup. It separates comments into three categories: emotional reactions, unsupported hot takes, and evidence-backed analysis.
 
-
+The goal is to identify meaningful soccer discussions rather than treating every comment as equally informative. I used 200 labeled comments and fine-tuned a transformer model to recognize these distinctions.
 
 ---
 
 ## Label Taxonomy
 
-<!-- Each label: a one-sentence definition and two real examples from your
-     reading. Then your decision rule for the hardest boundary.
+### `reaction`
 
-     The decision rule is worth a point on its own and it's the thing most
-     people leave out. Every taxonomy has a hardest boundary. Name yours. -->
+**Definition:** An emotional or immediate response without a substantive claim about the game.
 
-### `label_one`
+**Example 1:** "NOOOO not like this again 😭😭"
 
-**Definition:**
+**Example 2:** "I have never been so stressed in my life lmaooo"
 
-**Example 1:**
->
+### `hot_take`
 
-**Example 2:**
->
+**Definition:** A debatable judgment or claim with little or no supporting reasoning.
 
-### `label_two`
+**Example 1:** "Mbappé is honestly overrated, France play better without him."
 
-**Definition:**
+**Example 2:** "This is the worst refereeing performance of the entire tournament, embarrassing."
 
-**Example 1:**
->
+### `analysis`
 
-**Example 2:**
->
+**Definition:** A claim supported by reasoning, evidence, or a specific and checkable observation about play.
 
-### The hardest boundary
+**Example 1:** "Brazil's midfield got overrun because they pushed both 8s forward and left Casemiro isolated — every transition came straight through that gap."
 
-**Which two labels:**
+**Example 2:** "The penalty was soft but the bigger issue was the defending before it: the fullback stepped up with no cover."
 
-**The decision rule I used every time:**
-<!-- e.g. "If the post names a specific checkable fact, it's `analysis`, even
-     if the tone is heated." -->
+### The Hardest Boundary
 
+The hardest boundary was `hot_take` versus `analysis`.
 
+**Decision rule:** A comment qualifies as analysis only when its reasoning identifies something specific and checkable, such as a statistic, tactical pattern, or match event. Vague claims and unsupported judgments remain hot takes, even when they sound analytical.
+
+For `reaction` versus `hot_take`, I used a second rule: if an emotional statement contains an identifiable debatable claim, it is a hot take. Otherwise, it is a reaction.
 
 ---
 
 ## The Dataset
 
-<!-- Where you collected from, how you labelled, your counts, and three hard
-     cases. -->
+**Source:** Public r/soccer comments from 2026 World Cup discussions, including daily discussion, banter, and post-match threads.
 
-**Where the posts came from:**
+**Collection and labeling:** I recovered the 200-comment dataset from my original TakeMeter repository. The original workflow involved manually collecting public comments, using AI for pre-labeling assistance, and reviewing and correcting the labels. Borderline decisions were documented using the taxonomy rules.
 
-**How I labelled them:** <!-- Cold first? Pre-labelled with AI and corrected?
-Say so plainly — the disclosure is required, not penalised. -->
+For this version, I reused the original dataset, renamed the CSV column `notes` to `note`, and verified the label distribution and duplicate count.
 
 **Counts per label:**
 
 | Label | Count | Share |
-|---|---|---|
-|  |  |  |
-|  |  |  |
-|  |  |  |
-| **Total** |  | 100% |
+|---|---:|---:|
+| hot_take | 70 | 35% |
+| analysis | 66 | 33% |
+| reaction | 64 | 32% |
+| **Total** | **200** | **100%** |
 
-**Three hard cases**
+There were zero duplicate texts.
 
-<!-- Any post that made you pause: what it was, which two labels it could have
-     been, and what you chose. These are worth more than the easy 190. -->
+### Three Hard Cases
 
-**1.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+**1.** "Brazil need a midfield. Their transitioning was so poor."
 
-**2.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+- Could have been: `hot_take` or `analysis`
+- Decision: `hot_take`
+- Reason: It identifies a weakness but does not explain a specific mechanism or provide supporting evidence.
 
-**3.**
-> *The post:*
->
-> *Could have been:*
->
-> *I chose, because:*
+**2.** "Notable teams England have beaten since Euro 2016: [list]. Scotland: Haiti."
+
+- Could have been: `hot_take` or `analysis`
+- Decision: `hot_take`
+- Reason: The list is used primarily for banter rather than to support a substantive argument about play.
+
+**3.** "They have a striker who had 30 g/a last season and won POTS at a PL club..."
+
+- Could have been: `hot_take` or `analysis`
+- Decision: `analysis`
+- Reason: The claim is supported by specific, checkable statistics and an achievement.
 
 ---
 
 ## The Training Run
 
-<!-- Your starting model, your settings, and anything you changed and why. -->
+**Base model:** `distilbert-base-uncased`, fine-tuned for three-class text classification.
 
-**Base model:**
+**Dataset split:** 140 training, 30 validation, and 30 testing examples (70/15/15). The held-out test set contains 10 examples from each label.
 
-**Settings:** <!-- epochs, learning rate, batch size, seed -->
+**Training configuration:**
 
-**Anything I changed from the defaults, and why:**
+- Random seed: 42
+- Maximum sequence length: 128 tokens
+- Notebook default epochs: 3
+- Notebook default learning rate: 2e-5
+- Notebook default batch size: 16
 
-**Split sizes:** <!-- train / val / test, and per-label counts in the test
-split. If a label had fewer than about 8 in test, say so — it explains a lot
-of next unit's variance. -->
+**Hardware:** NVIDIA GeForce RTX 4050 Laptop GPU using CUDA and PyTorch 2.14.1+cu130.
 
+The current notebook produced `results.json` and `test_split.csv`.
 
+### Results
+
+| Metric | Result |
+|---|---:|
+| Overall accuracy | 0.600 |
+| Macro-F1 | 0.583 |
+| Analysis F1 | 0.750 |
+| Hot take F1 | 0.500 |
+| Reaction F1 | 0.500 |
+| Analysis recall | 0.900 |
+
+The classifier correctly identified 9 of 10 analysis comments. It struggled more with reactions, correctly identifying 4 of 10.
+
+These are results from the new notebook run, not copied from the previous project evaluation.
+
+The training settings above describe the notebook defaults and should be checked against the executed training cell before submission.
 
 ---
 
 ## How I Used AI
 
-<!-- Two specific moments — what you asked, what came back, what you changed.
+### Moment 1 — Label Taxonomy and Annotation
 
-     ⚠️ Plus disclosure of any pre-labelling. If you had a model pre-label a
-     batch and then read and corrected every one, say that. It's an allowed
-     workflow and disclosing it costs you nothing. Not disclosing it is the
-     problem. -->
+**What I asked:** In the original project, I used Claude to help examine difficult distinctions between reactions, unsupported claims, and evidence-backed analysis.
 
-**Moment 1**
+**What came back:** Suggestions for resolving ambiguous comments, especially those that mentioned tactics without providing specific supporting evidence.
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+**What I changed:** I applied a consistent rule requiring specific, checkable support before assigning the analysis label. The original project records that I reviewed and corrected the pre-labeled comments.
 
-**Moment 2**
+### Moment 2 — Recovering and Updating the Project
 
-- *What I asked for:*
-- *What came back:*
-- *What I changed:*
+**What I asked:** I used ChatGPT to help recover my previous TakeMeter work and adapt it to the current CodePath starter repository.
 
-**Pre-labelling disclosure:**
+**What came back:** Instructions for recovering the original CSV, correcting its column names, matching the label definitions, setting up Python 3.13, and running the training notebook.
 
-<!-- ═══════════════════════ UNIT 6 — THE TEST ═══════════════════════
+**What I changed:** I restored the original 200 comments, renamed `notes` to `note`, updated the label definitions and acceptance criteria, and executed the notebook locally.
 
-     Don't fill these in during unit 5.
-     ═══════════════════════════════════════════════════════════════════ -->
+**Pre-labeling disclosure:** AI-assisted pre-labeling was used in the original project. The original project documents human review and corrections. The dataset was reused for this version rather than recollected.
+
+**Reuse disclosure:** This submission builds on my previous TakeMeter project. The dataset, taxonomy, and original annotation decisions were reused, while the current notebook generated new training results.
 
 ---
 

@@ -2,182 +2,182 @@
   "model": "facebook/bart-large-mnli",
   "n": 30,
   "seed": 42,
-  "held_out": false,
+  "held_out": true,
   "used_definitions": true,
   "scores": {
     "n": 30,
-    "accuracy": 0.6333333333333333,
-    "f1_macro": 0.4789833822091887,
+    "accuracy": 0.5666666666666667,
+    "f1_macro": 0.5526340326340327,
     "per_label": {
       "analysis": {
-        "precision": 0.5789473684210527,
-        "recall": 0.9166666666666666,
-        "f1": 0.7096774193548387,
-        "support": 12
+        "precision": 0.5833333333333334,
+        "recall": 0.7,
+        "f1": 0.6363636363636365,
+        "support": 10
       },
       "hot_take": {
-        "precision": 0.0,
-        "recall": 0.0,
-        "f1": 0.0,
-        "support": 7
+        "precision": 0.4666666666666667,
+        "recall": 0.7,
+        "f1": 0.56,
+        "support": 10
       },
       "reaction": {
-        "precision": 0.7272727272727273,
-        "recall": 0.7272727272727273,
-        "f1": 0.7272727272727273,
-        "support": 11
+        "precision": 1.0,
+        "recall": 0.3,
+        "f1": 0.4615384615384615,
+        "support": 10
       }
     }
   },
   "predictions": [
     {
-      "text": "Everyone says the new course is faster but the results don't show it. Median finish was 3:58 last year on the old route and 3:56 this year. Two minutes across 4,000 runners is noise, not a faster course.",
-      "gold": "analysis",
-      "predicted": "reaction"
-    },
-    {
-      "text": "My heart rate drift over 90 minutes dropped from 11% to 4% across a year of easy running with no change in pace. That's the aerobic base people talk about, and it took eleven months to show up in the numbers.",
+      "text": "Honestly after matchweek one, I think England can go on and win this one. No other team has such a mix of runners and ball players. The only somewhat weak point is the defence.",
       "gold": "analysis",
       "predicted": "analysis"
     },
     {
-      "text": "This forum massively overrates mileage and underrates sleep.",
+      "text": "Obviously it's hard to compete with the bangers that are Russian and Italian anthems. But the English one grew on me over the years. What's the best anthem at this World Cup for you?",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Wow some of those comments in the all Asians look alike post is sad\u2026 Even sadder they're upvoted. Thought this sub would be better than that",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "It looked like they weren't allowed to do anything until min60 lol",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Surely it'd be more fair to start from tournaments Scotland are actually in, it's still just one team but still",
       "gold": "hot_take",
-      "predicted": "reaction"
+      "predicted": "hot_take"
     },
     {
-      "text": "Well that was miserable. Twenty miles into a headwind and I'm questioning everything.",
-      "gold": "reaction",
-      "predicted": "reaction"
-    },
-    {
-      "text": "Three of my last five injuries came within two weeks of a shoe change. I'm not saying the shoes caused it, but I've stopped changing models in a build-up.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Absolutely buried myself on that tempo and I regret nothing.",
-      "gold": "reaction",
-      "predicted": "reaction"
-    },
-    {
-      "text": "Track workouts are for people who like feeling fast more than getting fast.",
+      "text": "They won't win 2026 but they can make far. Brazilian media acknowledged that and they look to 2030.",
       "gold": "hot_take",
-      "predicted": "analysis"
+      "predicted": "hot_take"
     },
     {
-      "text": "Just watched someone in a full costume run past me at mile 20 and I've never felt worse about myself.",
-      "gold": "reaction",
-      "predicted": "reaction"
+      "text": "Japan played well, but the Netherlands also have a much worse attack than France. Even if they completely parked the bus the whole match, France probably would've got at least 1.",
+      "gold": "analysis",
+      "predicted": "hot_take"
     },
     {
-      "text": "Compared finishing times for people who did the club's structured plan against those who self-coached. Structured group averaged 6 minutes faster, but they also averaged 8 more miles a week. The plan may just be a mileage delivery mechanism.",
+      "text": "I hope Tuchels squad is starting to make a lot more sense now. Physicality, speed, directness, set pieces. Rice and Saka corners are overpowered against European teams who can't deal with the physicality. Tuchel prioritised Madueke and Gordon over Palmer/Foden because the team is built around Kane who drops deep, and the speed in behind is super useful.",
       "gold": "analysis",
       "predicted": "analysis"
     },
     {
-      "text": "Just signed up for my first marathon and I'm equal parts excited and terrified.",
-      "gold": "reaction",
-      "predicted": "reaction"
-    },
-    {
-      "text": "Got my entry! Been refreshing that page for forty minutes.",
-      "gold": "reaction",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Rained the entire four hours. Every single minute. I'm never doing this again and I've already entered next year.",
-      "gold": "reaction",
-      "predicted": "analysis"
-    },
-    {
-      "text": "A sub-3 marathon is more impressive than most people's entire athletic career and runners undersell it constantly.",
+      "text": "Anyone that didn't think this would be the case were always deluding themselves. Spurs finishing 17th twice was never going to drastically change how they're viewed within the country and the footballing world",
       "gold": "hot_take",
-      "predicted": "analysis"
+      "predicted": "hot_take"
     },
     {
-      "text": "Checked the splits from the top 20 finishers. Eighteen of them ran the second half slower, average positive split of 3:40. On a course billed as net downhill. Something about the back section is harder than the elevation profile suggests.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Standing at the finish waiting for my sister and I'm more nervous than I was for my own race.",
-      "gold": "reaction",
-      "predicted": "reaction"
-    },
-    {
-      "text": "The pace group at 3:30 finished in 3:34 last year and 3:31 the year before. If you're using them as a safety net, know that the net has a hole in it roughly every other year.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "The entry fee went from 45 to 72 over four years. Field size went from 3,200 to 3,400. Whatever the extra 27 is paying for, it isn't capacity.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Six of the last eight course records here were set in years when race-day temperature was under 10C. The two exceptions were both years with a strong tailwind on the back half. Weather explains more of the record book than the field does.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Just got back from the long run and I cannot feel my hands. Worth it though.",
-      "gold": "reaction",
-      "predicted": "reaction"
-    },
-    {
-      "text": "Carbon plates gave me about 2% on paper and roughly nothing in races. Three time trials in each shoe on the same loop, same month: 19:42/19:38/19:51 in the plates, 19:47/19:55/19:44 in the trainers. The overlap is bigger than the gap.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Woke up to snow on race morning. Absolutely gutted.",
-      "gold": "reaction",
-      "predicted": "reaction"
-    },
-    {
-      "text": "Twelve weeks of doubles versus twelve weeks of single runs at the same weekly volume. Doubles block: more consistent, no missed days, race 90 seconds faster. Singles block: two missed weeks from fatigue. For me the split makes the volume survivable.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "The entry fees are a scandal and everyone's decided to be fine with it.",
+      "text": "Flip flopping Raphinha between right and middle just made no sense to start with",
       "gold": "hot_take",
-      "predicted": "reaction"
+      "predicted": "hot_take"
     },
     {
-      "text": "Finished. Sat down on the kerb. Have not moved in ten minutes.",
+      "text": "The Jabulani sucked for both attackers and goalkeepers. This year's World Cup ball seems to be both catching out the goalkeepers, whilst not hindering strikers.",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "A-ha! Match fixing!",
       "gold": "reaction",
       "predicted": "analysis"
     },
     {
-      "text": "Strength training is a distraction for distance runners. The time is better spent running.",
+      "text": "Wonderwall after England's win yesterday gave me goosebumps ngl",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Mbappe and Olise will bring the worldcup. It doesn't matter if dembele is wrongly used. They are so good that it make up for it. Its sad but dembele should be benched, he is so bad when not in psg system.",
+      "gold": "hot_take",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Sad days for Brazil's NT when Morocco's midfield is not just superior overall but overwhelmingly more talented and in control of the game. All due respect to Morocco, but this is Brazil we're talking about.",
+      "gold": "hot_take",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Better wages + living in London + stepping stone to a bigger move just like modric and bale",
       "gold": "hot_take",
       "predicted": "analysis"
     },
     {
-      "text": "Legs are wrecked, back is fine, and I have no idea what that means.",
+      "text": "Why is no one talking about the Landon Donovan Thierry Henry back and forth? Landon was wrong to call France arrogant in the first half. Henry was pissed and Zlatan said only ignorant people would say that France were arrogant",
+      "gold": "hot_take",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "No Endrick is really stupid. Ancelotti clearly doesn't rate him. That Vini performance in the second half was really bad. He could've been subbed off. Also Cunha should just start. Igor should not be starting.",
+      "gold": "analysis",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Germany opened 2014 4-0 over Portugal, drew 2-2 with Ghana, then beat the US 1-0. The only one I remember much about is the US game, where they controlled the game more than the score would suggest.",
+      "gold": "analysis",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "Damn the Ronaldo debate has been so intense. On one side people blame the draw against DR Congo solely on Ronaldo. On the other side people say the whole Portugal team has been shite and levels below Argentina for years which is why Messi won unlike Ronaldo.",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "The way a ref is managing the game affects player behavior. i also think Carlo's subs closed shop so there was no more end to end action",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Congratulations to England on winning the coveted Notable teams beaten trophy and, well, nothing else.",
       "gold": "reaction",
       "predicted": "reaction"
     },
     {
-      "text": "Elevation gain on the official profile is 340m. My watch says 410m and so do the four other people I've compared with. The profile is either smoothed or wrong, and it matters for pacing the last 10k.",
-      "gold": "analysis",
-      "predicted": "analysis"
-    },
-    {
-      "text": "Racing more than twice a year is how you stay mediocre forever.",
+      "text": "Biggest surprise has been how well some of the smallest teams have done to grind out results. Expected a few routs that never materialised",
       "gold": "hot_take",
       "predicted": "analysis"
     },
     {
-      "text": "Went back through my logs for every race where I hit my goal. All four had a three-week taper. The two where I tapered for ten days I missed by over two minutes. Small sample, but it's the only variable that lines up.",
+      "text": "People were concerned that there would be blowouts, but most of the 33-48 teams have been very competitive",
+      "gold": "hot_take",
+      "predicted": "analysis"
+    },
+    {
+      "text": "On paper they're the second best team in that group: everyone sees Norway because of Haaland and Odegaard but Senegal is chock full of talent and has serious experience playing international tournaments",
       "gold": "analysis",
       "predicted": "analysis"
     },
     {
-      "text": "Trail running has better people and worse racing. Both of those are obvious to anyone who's done both.",
-      "gold": "hot_take",
+      "text": "Carlo Ancelotti exists just to make Endrick suffer",
+      "gold": "reaction",
+      "predicted": "hot_take"
+    },
+    {
+      "text": "He played flute as a kid for like a year so James Corden asked him to do that as a celebration if he scored and he said he would and he did.",
+      "gold": "reaction",
+      "predicted": "analysis"
+    },
+    {
+      "text": "Dembele did indeed play as number 10 at times for Dortmund and PSG",
+      "gold": "analysis",
+      "predicted": "analysis"
+    },
+    {
+      "text": "So matchday 1 is over and I have to say I've been entertained by nearly every match so far. I feared the atmospheres would be dead but they seem to be very loud and passionate so far. It's been really nice to see people come together over football.",
+      "gold": "reaction",
+      "predicted": "reaction"
+    },
+    {
+      "text": "Brazil looked incredibly toothless and uninspired. Ancelotti will really need to work some magic because they have no midfield and no fullback presence. It's hard to pick one but I think Raphinha was the most disappointing.",
+      "gold": "analysis",
       "predicted": "analysis"
     }
   ]

@@ -196,6 +196,9 @@ The training settings above describe the notebook defaults and should be checked
 | F1 — `label_two` |  |  |  |
 
 **What I predicted before I looked:**
+
+I predict the trained model will beat the baseline overall, and by the most on `reaction`, because the baseline with definitions scored only 0.462 F1 there, while the trained model learned what my reactions look like from labeled examples.
+
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
 

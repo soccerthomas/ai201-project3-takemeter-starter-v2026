@@ -181,14 +181,6 @@ The training settings above describe the notebook defaults and should be checked
 
 **Reuse disclosure:** This submission builds on my previous TakeMeter project. The dataset, taxonomy, and original annotation decisions were reused, while the current notebook generated new training results.
 
-### Moment 3 — Unit 6 testing
-
-**What I asked:** I used Claude to walk me through the unit 6 commands, format the baseline, run-log and confusion-matrix tables, and look for patterns in my errors.
-
-**What came back:** It summed the confusion matrix across all three seeds, which showed that the reaction to hot_take confusion was one-directional (17 vs 3), not symmetric as the single-seed matrix suggested. It also pointed out that eval loss stayed near the 1.0986 chance level, which pointed to undertraining.
-
-**What I changed:** I kept my original pre-results prediction after noticing a revised version had been written after seeing the trained numbers. I labeled the 30 staff posts myself, without AI picking labels.
-
 ---
 
 ## Baseline vs. Trained
@@ -302,14 +294,6 @@ In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the o
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
 
-**Criteria 1 (macro F1) and 3 (`reaction` precision): the reaction/hot_take boundary.** Summed over three seeds, 17 of 30 real `reaction` posts were predicted `hot_take`, and seed 7 never predicted `reaction` at all. Only 3 `hot_take` posts went the other way, so this is one-directional. My likely cause is a boundary I applied inconsistently: under my definitions a soccer reaction often contains a judgment ("what a goal, best striker in the league"), which also fits `hot_take`. I could not confirm this with the staff agreement check because I did not complete it (see Agreement Report), so this diagnosis is a labeling hypothesis, not yet a proven one.
-
-**Criterion 4 (accuracy) and all misses: undertraining.** Eval loss only fell from about 1.09 to 1.04–1.07 over 3 epochs. Random guessing on three labels gives 1.0986, so the model barely moved from chance. Mean confidence was 0.36–0.37 (chance is 0.33), and it was almost the same when right (0.37) as when wrong (0.36). The model had not learned enough to know when it was right. This is a training problem, not a labeling one.
-
-**Criterion 2 (`analysis` recall): a hard pair plus a tiny test set.** Seed 42 reached 0.90, but seeds 7 and 2024 were 0.60, with 4 analysis posts called `hot_take` in each. With only 10 analysis posts per test split, each post is worth 0.10 recall, so one or two borderline posts decide the verdict.
-
-**Underlying all four:** accuracy swung 13.3 points across seeds (0.467 to 0.600). With 200 examples and 30 test posts, the measurement itself is unstable.
-
 
 
 ---
@@ -322,7 +306,7 @@ In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the o
      data/staff_taxonomy.md, not your own — so every argument below is made
      from those definitions and those decision rules. -->
 
-**Agreement rate:** Not completed. I labeled all 30 staff posts under the staff taxonomy (`my_staff_labels.csv`, committed before seeing any answers), but did not obtain `staff_labels.csv` before submitting, so `agreement.py` was not run and there are no disagreements to adjudicate.
+**Agreement rate:** ___ / 30 = ___%
 
 <!-- Nobody grades this number. A 60% who argues every disagreement from the
      stated rules beats a 95% who wrote "staff was right" nine times. Several
@@ -370,8 +354,6 @@ In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the o
 
 ## The Improvement
 
-
-**Not completed.** The change I planned was to raise training epochs from 3 to 10. The diagnosis pointed at training: eval loss stayed near chance (1.04–1.07 vs 1.0986) and confidence barely rose above 0.33. I did not run the after-retrain, so there is no Run Log — After and no `results_three_seeds_after.json`.
 **What I changed:**
 
 **Which diagnosis pointed at it:**
@@ -398,14 +380,6 @@ In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the o
 ## What's Still Broken
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
-
-All four model criteria are still missed (macro F1, `analysis` recall, `reaction` precision, accuracy).
-
-- **Undertraining (affects all four):** I would retrain with 10 epochs, since the loss shows the model barely learned. I stopped because I did not run Milestone 5 before submitting.
-- **`reaction` precision / macro F1:** I would complete the staff agreement check to find out whether the reaction/hot_take confusion is my labeling or the model. If it is labeling, I would relabel that one boundary. I stopped because I did not get the staff labels in time.
-- **`analysis` recall / accuracy stability:** I would add more labeled examples. 30 test posts make each verdict depend on one or two posts. I stopped because collecting and labeling more data was out of scope for this unit.
-
-**What I meant vs. what the model learned:** I meant `reaction` to capture in-the-moment emotional responses and `hot_take` to capture unsupported claims, but the model learned something closer to "strong opinionated language means hot_take", which is why 17 of 30 reactions were called hot_take across seeds. It did best on `analysis` (21 of 30 correct summed over seeds), which suggests it may be keying on surface cues like numbers and stats rather than on whether the fact actually carries the argument.
 
 
 

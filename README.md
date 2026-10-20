@@ -213,6 +213,8 @@ I predict the trained model will beat the baseline overall, and by the most on `
 
 Fine-tuning added very little. The trained model is ahead by 0.033 accuracy, which is a single post on a 30-post test set, so this one split can't show that the gap is real. The three-seed runs in Milestone 2 will show whether it holds. The trained model's real advantage is on `analysis`, where it learned my 'specific, checkable support' boundary better than a zero-shot model reading the definition. It lost ground on `hot_take`, which suggests the hot_take/analysis or hot_take/reaction boundary in my training labels is less clear than the definition. The baseline also takes a few seconds per post, while the trained model is near-instant, so even at similar accuracy the fine-tuned model is cheaper to run.
 
+**Update after three seeds:** Across seeds 42, 7 and 2024 the trained model scored 0.600, 0.500 and 0.467 accuracy (mean 0.522). The baseline (0.567) was scored on only one split, so this is not a like-for-like comparison, but it is above two of my three seeds. The single-split win came from a friendly draw. Averaged over seeds, fine-tuning did not clearly beat a zero-shot model reading my definitions.
+
 
 
 ---
@@ -224,27 +226,45 @@ Fine-tuning added very little. The trained model is ahead by 0.033 accuracy, whi
 
 | Criterion | Target | Seed 42 | Seed 7 | Seed 2024 | Verdict |
 |---|---|---|---|---|---|
-| 1.  |  |  |  |  |  |
-| 2.  |  |  |  |  |  |
-| 3.  |  |  |  |  |  |
-| 4.  |  |  |  |  |  |
-| 5.  |  |  |  |  |  |
+| 1. Macro F1 | ≥ 0.70 | 0.583 | 0.404 | 0.444 | MISSED |
+| 2. `analysis` recall | ≥ 0.65 | 0.900 | 0.600 | 0.600 | MISSED |
+| 3. `reaction` precision | ≥ 0.85 | 0.667 | 0.000* | 0.667 | MISSED |
+| 4. Overall accuracy | ≥ 0.65 | 0.600 | 0.500 | 0.467 | MISSED |
+| 5. Dataset balance (each label 25–50%) | 25–50% | 32–35% | 32–35% | 32–35% | MET |
+
+\* Seed 7 never predicted `reaction` at all, so its reaction precision is 0.
+
+**Spread:** accuracy ranged from 0.467 to 0.600, a 13.3-point swing across seeds. That is more than the ~10-point threshold, so 200 examples (30 test posts) is too small for a stable measurement.
+
+**Device:** cuda (NVIDIA GeForce RTX 4050 Laptop GPU), torch 2.14.1+cu130. Each seed trained in about 3 seconds.
 
 ### Confusion matrix
 
 <!-- ⚠️ TYPED AS A MARKDOWN TABLE. The notebook prints one ready to paste.
      An image of a matrix earns nothing. -->
 
-| true \ predicted |  |  |  |
+| true \ predicted | analysis | hot_take | reaction |
 |---|---|---|---|
-| **** |  |  |  |
-| **** |  |  |  |
-| **** |  |  |  |
+| **analysis** | 9 | 1 | 0 |
+| **hot_take** | 3 | 5 | 2 |
+| **reaction** | 2 | 4 | 4 |
+
+*Seed 42, as printed by section 7.*
+
+Summed across all three seeds (90 test predictions):
+
+| true \ predicted | analysis | hot_take | reaction |
+|---|---|---|---|
+| **analysis** | 21 | 9 | 0 |
+| **hot_take** | 7 | 20 | 3 |
+| **reaction** | 7 | 17 | 6 |
 
 **My biggest off-diagonal number, and what it means:**
 <!-- Not "the model made mistakes" — WHICH boundary it didn't learn, and which
      direction. "7 real analysis posts were called hot_take and only 3 went the
      other way" is a direction, not just an error rate. -->
+
+In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the other way. Summed over all three seeds it is clearly one direction: 17 of 30 real `reaction` posts were called `hot_take`, versus only 3 `hot_take` posts called `reaction`. The model has not learned the reaction/hot_take boundary, and when a post carries strong opinion it defaults to `hot_take`.
 
 
 
@@ -257,11 +277,11 @@ Fine-tuning added very little. The trained model is ahead by 0.033 accuracy, whi
 
 | # | Criterion | Target | Verdict | How I decided |
 |---|---|---|---|---|
-| 1 |  |  |  |  |
-| 2 |  |  |  |  |
-| 3 |  |  |  |  |
-| 4 |  |  |  |  |
-| 5 |  |  |  |  |
+| 1 | Macro F1 | ≥ 0.70 | MISSED | Best seed was 0.583; none of the three reached 0.70. |
+| 2 | `analysis` recall | ≥ 0.65 | MISSED | Seed 42 hit 0.90, but seeds 7 and 2024 were 0.60. The target has to hold on all three. |
+| 3 | `reaction` precision | ≥ 0.85 | MISSED | 0.667, 0.000, 0.667. Seed 7 never predicted `reaction` at all. |
+| 4 | Overall accuracy | ≥ 0.65 | MISSED | 0.600, 0.500, 0.467; none reached 0.65. |
+| 5 | Dataset balance | each label 25–50% | MET | 70/66/64 = 35/33/32%, all inside the range. This is a property of the dataset, so it is identical on every seed. |
 
 **Diagnoses**
 

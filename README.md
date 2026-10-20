@@ -181,6 +181,10 @@ The training settings above describe the notebook defaults and should be checked
 
 **Reuse disclosure:** This submission builds on my previous TakeMeter project. The dataset, taxonomy, and original annotation decisions were reused, while the current notebook generated new training results.
 
+### Moment 3 — Unit 6 testing
+
+I used Claude to walk through the commands and format the results tables. Summing the confusion matrix across seeds showed the reaction-to-hot_take confusion runs one way (17 vs 3), and I labeled the staff posts myself.
+
 ---
 
 ## Baseline vs. Trained
@@ -294,6 +298,14 @@ In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the o
      have that can tell a LABELLING problem from a MODEL problem, and this
      section is graded on whether you used it that way. -->
 
+**Criteria 1 (macro F1) and 3 (`reaction` precision): the reaction/hot_take boundary.** Summed over three seeds, 17 of 30 real `reaction` posts were predicted `hot_take`, and seed 7 never predicted `reaction` at all. Only 3 `hot_take` posts went the other way, so the confusion runs one way. My likely cause is a boundary I applied inconsistently: under my definitions a soccer reaction often contains a judgment ("what a goal, best striker in the league"), which also fits `hot_take`.
+
+**Criterion 4 (accuracy) and all misses: undertraining.** Eval loss only fell from about 1.09 to 1.04–1.07 over 3 epochs. Random guessing on three labels gives 1.0986, so the model barely moved from chance. Mean confidence was 0.36–0.37 (chance is 0.33), and almost the same when right (0.37) as when wrong (0.36).
+
+**Criterion 2 (`analysis` recall): a hard pair plus a tiny test set.** Seed 42 reached 0.90, but seeds 7 and 2024 were 0.60, with 4 analysis posts called `hot_take` in each. With 10 analysis posts per split, each post is worth 0.10 recall.
+
+**Underlying all four:** accuracy swung 13.3 points across seeds (0.467 to 0.600), so with 30 test posts the measurement itself is unstable.
+
 
 
 ---
@@ -380,6 +392,8 @@ In seed 42, 4 real `reaction` posts were called `hot_take` and only 2 went the o
 ## What's Still Broken
 
 <!-- For each criterion still missed: what you'd do, and why you stopped. -->
+
+**What I meant vs. what the model learned:** I meant `reaction` to capture in-the-moment emotional responses and `hot_take` to capture unsupported claims, but the model learned something closer to "strong opinionated language means hot_take", which is why 17 of 30 reactions were called hot_take across seeds. It did best on `analysis` (21 of 30 correct summed over seeds), which suggests it may be keying on surface cues like numbers rather than on whether the fact carries the argument.
 
 
 

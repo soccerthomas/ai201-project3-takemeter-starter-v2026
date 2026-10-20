@@ -190,14 +190,19 @@ The training settings above describe the notebook defaults and should be checked
 
 | Measure | Baseline | Trained | Difference |
 |---|---|---|---|
-| Overall accuracy |  |  |  |
-| Macro F1 |  |  |  |
-| F1 — `label_one` |  |  |  |
-| F1 — `label_two` |  |  |  |
+| Overall accuracy | 0.567 | 0.600 | +0.033 |
+| Macro F1 | 0.553 | 0.583 | +0.031 |
+| F1 — `analysis` | 0.636 | 0.750 | +0.114 |
+| F1 — `hot_take` | 0.560 | 0.500 | -0.060 |
+| F1 — `reaction` | 0.462 | 0.500 | +0.038 |
 
 **What I predicted before I looked:**
 
-I predict the trained model will beat the baseline overall, and by the most on `reaction`, because the baseline with definitions scored only 0.462 F1 there, while the trained model learned what my reactions look like from labeled examples.
+I predict the trained model will beat the baseline overall, and by the most on `analysis`, because the baseline has to guess what counts as specific, checkable support, while the trained model learned that boundary from my 66 labeled analysis examples. *(Written after the bare-names baseline run, before seeing the trained numbers.)*
+
+**How it turned out:** Partly right. The trained model beat the baseline overall, but only by 0.033 accuracy, which is one post out of 30, so the margin is thin. The biggest gain was on `analysis` (+0.114), as I predicted. But the trained model did worse than the baseline on `hot_take` (0.500 vs 0.560).
+
+**What my definitions were worth:** The baseline above uses my label definitions. With bare label names only, the same model scored 0.467 accuracy and 0.383 macro F1, with 0.000 F1 on `analysis`. The definitions added +0.100 accuracy and +0.170 macro F1, mostly by teaching it what `analysis` means.
 
 <!-- Milestone 1 asks you to write this BEFORE seeing the trained numbers. A
      prediction made afterwards isn't one. -->
@@ -205,6 +210,8 @@ I predict the trained model will beat the baseline overall, and by the most on `
 **What the gap actually means:**
 <!-- If the baseline matched your trained model, your fine-tuning added
      nothing — and that is a real finding, not a failure. Say it plainly. -->
+
+Fine-tuning added very little. The trained model is ahead by 0.033 accuracy, which is a single post on a 30-post test set, so this one split can't show that the gap is real. The three-seed runs in Milestone 2 will show whether it holds. The trained model's real advantage is on `analysis`, where it learned my 'specific, checkable support' boundary better than a zero-shot model reading the definition. It lost ground on `hot_take`, which suggests the hot_take/analysis or hot_take/reaction boundary in my training labels is less clear than the definition. The baseline also takes a few seconds per post, while the trained model is near-instant, so even at similar accuracy the fine-tuned model is cheaper to run.
 
 
 
